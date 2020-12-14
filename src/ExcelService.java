@@ -41,6 +41,10 @@ public class ExcelService
         int hit = 0;
         for (int i = interval; i <= total - 1; i++) {
             HSSFRow currentRow = firstSheet.getRow(i);
+            currentRow.getCell(2).setCellType(CellType.STRING);
+            currentRow.getCell(3).setCellType(CellType.STRING);
+            currentRow.getCell(5).setCellType(CellType.STRING);
+            currentRow.getCell(13).setCellType(CellType.STRING);
             if (currentRow.getCell(3) == null || currentRow.getCell(3).getStringCellValue().isEmpty()) {
                 break;
             }
@@ -55,9 +59,7 @@ public class ExcelService
                     hit ++;
                 }
             }
-            currentRow.getCell(2).setCellType(CellType.STRING);
-            currentRow.getCell(5).setCellType(CellType.STRING);
-            currentRow.getCell(13).setCellType(CellType.STRING);
+
             Cloth cloth = new Cloth(currentRow.getCell(0).getNumericCellValue(),
                     currentRow.getCell(1).getStringCellValue(),
                     currentRow.getCell(2).getStringCellValue(),
@@ -84,7 +86,15 @@ public class ExcelService
         FileInputStream inputStream = new FileInputStream(new File(path));
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         HSSFSheet firstSheet = workbook.getSheetAt(0);
-        HSSFRow currentRow = firstSheet.getRow(1);
+        HSSFRow currentRow = firstSheet.getRow(0);
+        currentRow.getCell(0).setCellType(CellType.STRING);
+        currentRow.getCell(2).setCellType(CellType.STRING);
+        currentRow.getCell(3).setCellType(CellType.STRING);
+        currentRow.getCell(5).setCellType(CellType.STRING);
+        currentRow.getCell(6).setCellType(CellType.STRING);
+        currentRow.getCell(7).setCellType(CellType.STRING);
+        currentRow.getCell(8).setCellType(CellType.STRING);
+        currentRow.getCell(9).setCellType(CellType.STRING);
         Title title = new Title(currentRow.getCell(0).getStringCellValue(),
                 currentRow.getCell(1).getStringCellValue(),
                 currentRow.getCell(2).getStringCellValue(),
