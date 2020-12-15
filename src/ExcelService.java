@@ -41,10 +41,11 @@ public class ExcelService
         int hit = 0;
         for (int i = interval; i <= total - 1; i++) {
             HSSFRow currentRow = firstSheet.getRow(i);
-            currentRow.getCell(2).setCellType(CellType.STRING);
-            currentRow.getCell(3).setCellType(CellType.STRING);
-            currentRow.getCell(5).setCellType(CellType.STRING);
-            currentRow.getCell(13).setCellType(CellType.STRING);
+            try {
+                setCellTypeToString(currentRow, 2, 3, 5, 13);
+            } catch (NullPointerException e) {
+                continue;
+            }
             if (currentRow.getCell(3) == null || currentRow.getCell(3).getStringCellValue().isEmpty()) {
                 break;
             }
@@ -82,19 +83,21 @@ public class ExcelService
         return cloths;
     }
 
+    private static void setCellTypeToString(HSSFRow currentRow, int i2, int i3, int i4, int i5)
+    {
+        currentRow.getCell(i2).setCellType(CellType.STRING);
+        currentRow.getCell(i3).setCellType(CellType.STRING);
+        currentRow.getCell(i4).setCellType(CellType.STRING);
+        currentRow.getCell(i5).setCellType(CellType.STRING);
+    }
+
     public static Title getTitle(String path) throws Exception {
         FileInputStream inputStream = new FileInputStream(new File(path));
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         HSSFSheet firstSheet = workbook.getSheetAt(0);
         HSSFRow currentRow = firstSheet.getRow(0);
-        currentRow.getCell(0).setCellType(CellType.STRING);
-        currentRow.getCell(2).setCellType(CellType.STRING);
-        currentRow.getCell(3).setCellType(CellType.STRING);
-        currentRow.getCell(5).setCellType(CellType.STRING);
-        currentRow.getCell(6).setCellType(CellType.STRING);
-        currentRow.getCell(7).setCellType(CellType.STRING);
-        currentRow.getCell(8).setCellType(CellType.STRING);
-        currentRow.getCell(9).setCellType(CellType.STRING);
+        setCellTypeToString(currentRow, 0, 2, 3, 5);
+        setCellTypeToString(currentRow, 6, 7, 8, 9);
         Title title = new Title(currentRow.getCell(0).getStringCellValue(),
                 currentRow.getCell(1).getStringCellValue(),
                 currentRow.getCell(2).getStringCellValue(),
